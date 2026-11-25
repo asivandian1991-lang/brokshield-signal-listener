@@ -1,2 +1,2 @@
-# brokshield-signal-listener
-Telegram Signal Automation for BrokShield
+# BrokShield Telegram listener
+Use Python 3.12 and Docker. Configure private runtime variables TG_API_ID, TG_API_HASH, TG_SESSION, WP_LISTENER_KEY, WP_REST_BASE (optional), START_FROM_UTC (ISO UTC timestamp, set once before enabling publishing), POLL_SECONDS (optional, default 20). Generate session locally using generate_session.py; never commit credentials. WordPress v0.1.1 handles parsing, publication and CRM. No HTTP port needed. On restart the worker replays from START_FROM_UTC; WordPress deduplicates known signals, but ambiguous Telegram send failures can duplicate. Long-running installations should implement durable cursors before large backlogs. Test with authorized sources only. No live integration test has been performed.
