@@ -41,7 +41,13 @@ async def main():
                             except FloodWaitError as e:
                                 logging.warning('Telegram rate limit: %s seconds',e.seconds); await asyncio.sleep(e.seconds+1)
                             except Exception as e:
-                                logging.warning('Source %s failed: %s',name,type(e).__name__)
+                                if isinstance(e, httpx.HTTPStatusError):
+    logging.warning(
+        'Source %s failed: HTTP %s',
+        name, e.response.status_code
+    )
+else:
+    logging.warning('Source %s failed: %s', name, type(e).__name__)
                     else: logging.info('Publishing disabled in WordPress')
                 except Exception as e: logging.warning('Config request failed: %s',type(e).__name__)
                 await asyncio.sleep(POLL)
